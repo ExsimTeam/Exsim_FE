@@ -4,7 +4,6 @@ import { clearData, getData } from "./storageUtils";
 class RequestManager {
   public service: AxiosInstance
   private pending: Map<string, AbortController> = new Map()
-  private allPendingRequestRecords: AbortController[] = []
 
   constructor(baseURL: string, timeout: number) {
     this.service = axios.create({
@@ -28,7 +27,6 @@ class RequestManager {
           let controller = new AbortController()
           config.signal = controller.signal
           this.pending.set(reqKey, controller)
-          this.allPendingRequestRecords.push(controller)
         }
 
         // Add token
@@ -94,11 +92,10 @@ class RequestManager {
    * Cancel all pending requests
    */
   cancelAllRequests = () => {
-    this.allPendingRequestRecords &&
-      this.allPendingRequestRecords.forEach(value => {
-        value.abort()
-      })
-    this.allPendingRequestRecords.splice(0)
+    this.pending.forEach((value, _) => {
+      value.abort()
+    })
+    this.pending.clear()
   }
 
   get = (config: AxiosRequestConfig) => {
