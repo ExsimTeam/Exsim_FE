@@ -1,46 +1,51 @@
-# Getting Started with Create React App
+# The Web Front End of the Exsim Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Brief
+This is the web front end of the Exsim project, written in React with TypeScript.
 
-## Available Scripts
+## Before Coding
+***Don't push to branch `main` directly!***
 
-In the project directory, you can run:
+Instead, create a new branch and use 'Pull Request' to merge on main. After the merging, you can simply delete the branch.
+
+## Prerequisites
+* Node.js
+
+## Install & Build
+### `npm install`
+Install dependencies.
 
 ### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Run the app in the development mode.\
+A server will be open by default on [http://localhost:3000](http://localhost:3000). You can view it in the browser.
 
 ### `npm run build`
+Build the app for production mode to the `build` folder.\
+It will optimize the build for best performance.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Folder Structure
+```
+/exsim
+    README.md
+    node_modules/
+    package.json
+    public/
+        index.html
+    src/
+        index.tsx
+        api/
+        components/
+        pages/
+        res/
+        utils/
+```
+* `node_modules/` Where the node modules are located.
+* `public/` Where the static resouces are located. `index.html` is needed for webpack to build the project.
+* `src/` Where our source code is located.
+* `src/index.tsx` The entry point of the project.
+* `src/api` Where the api classes are located.
+* `src/components/` Where the public components are located.
+* `src/pages/` Where the pages(pages that has a router) are located.
+* `src/res/` Where resouces like images are located.
+* `src/utils/` Where the utils are located. Such as utils to manage local storage.
+* `src/common/` Where some other things like global constants are located.
