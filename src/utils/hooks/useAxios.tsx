@@ -5,13 +5,12 @@ import service from "../service"
 export const useAxios = <D, R, E = string>(
   config: AxiosRequestConfig
 ) => {
-  interface IResponse {
+  const [status, setStatus] = useState<'idle' | 'pending' | 'success' | 'error'>('idle')
+  const [response, setResponse] = useState<{
     code: number,
     msg: string,
     result: R
-  }
-  const [status, setStatus] = useState<'idle' | 'pending' | 'success' | 'error'>('idle')
-  const [response, setResponse] = useState<IResponse | null>(null)
+  } | null>(null)
   const [error, setError] = useState<E | null>(null)
   const [controller] = useState(new AbortController());
 
@@ -29,12 +28,19 @@ export const useAxios = <D, R, E = string>(
       data: payload
     })
       .then(response => {
-        setResponse(response as unknown as IResponse)
+        setResponse(response as any)
         setStatus('success')
+        return response as unknown as {
+          code: number,
+          msg: string,
+          result: R
+        }
       })
       .catch(error => {
         setError(error.toJSON())
         setStatus('error')
+
+        return Promise.reject(error)
       })
   }, [config, controller])
 
@@ -43,5 +49,5 @@ export const useAxios = <D, R, E = string>(
     controller.abort()
   }, [controller])
 
-  return [status, response, error, execute, abort]
+  return { status, response, error, execute, abort }
 }
