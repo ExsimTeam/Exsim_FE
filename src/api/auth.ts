@@ -4,7 +4,7 @@ import { useAxios } from "src/utils/hooks/useAxios"
  * 登录API
  * @param payload 
  * @param immediate 
- * @returns 
+ * @returns [status, response, error, execute, abort]
  */
 export const useLogin = () => {
 
@@ -24,7 +24,7 @@ export const useLogin = () => {
  * 注册API
  * @param payload 
  * @param immediate 
- * @returns 
+ * @returns [status, response, error, execute, abort]
  */
 export const useRegister = () => {
 
@@ -46,7 +46,7 @@ export const useRegister = () => {
  * 发送验证码API
  * @param payload 
  * @param immediate 
- * @returns 
+ * @returns [status, response, error, execute, abort]
  */
 export const useSendVerify = () => {
 
@@ -60,7 +60,7 @@ export const useSendVerify = () => {
  * 重置密码API
  * @param payload 
  * @param immediate 
- * @returns 
+ * @returns [status, response, error, execute, abort]
  */
 export const useResetPassword = () => {
 
@@ -77,7 +77,7 @@ export const useResetPassword = () => {
 /**
  * 登出API
  * @param immediate 
- * @returns 
+ * @returns [status, response, error, execute, abort]
  */
 export const useLogout = () => {
   return useAxios<{}, {}>({

@@ -12,10 +12,17 @@ service.interceptors.request.use(
     // Add token for request
     let token = getData('token')
     if (token) {
-      if (config.headers)
-        config.headers['token'] = token
-      else
-        config.headers = { 'token': token }
+      config.headers = {
+        ...config.headers,
+        'token': token
+      }
+    }
+
+    if (config.method === 'POST' || config.method === 'post') {
+      config.headers = {
+        ...config.headers,
+        'Content-Type': 'multipart/form-data'
+      }
     }
 
     return config
@@ -34,6 +41,10 @@ service.interceptors.response.use(
   error => {
     if (error.response) {
       switch (error.response.status) {
+        case 400: {
+          message.error('400 Bad Request')
+          break
+        }
         case 401: {
           clearData()
           window.location.href = '/login'

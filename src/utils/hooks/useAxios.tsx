@@ -33,7 +33,7 @@ export const useAxios = <D, R, E = string>(
         return response as unknown as {
           code: number,
           msg: string,
-          result: R
+          data: R
         }
       })
       .catch(error => {
