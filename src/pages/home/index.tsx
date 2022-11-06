@@ -1,210 +1,38 @@
-import { FileTextOutlined, CloudSyncOutlined } from "@ant-design/icons";
-import { Layout, Table } from "antd";
-import { FunctionComponent } from "react";
+import { CloudSyncOutlined, FileTextOutlined } from "@ant-design/icons";
+import { message, Table } from "antd";
+import { FunctionComponent, useEffect, useState } from "react";
+import { FileInfo, useFileList } from "src/api/file";
 
-import './index.scss'
+import './index.scss';
 
-const { Header, Content, Footer } = Layout
 const { Column } = Table
 
-interface FileInfo {
-  name: string,
-  id: number,
-  authorUsername: string,
-  authorUserId: number,
-  property: number,
-  createdTime: string,
-  lastModifyTime: string
-}
-
-const fileInfos: FileInfo[] = [
-  {
-    name: '数据库作业情况',
-    id: 1,
-    authorUsername: '董永昊',
-    property: 1,
-    authorUserId: 1,
-    createdTime: '2022-10-20 19:03:20',
-    lastModifyTime: '2022-10-20 19:03:20'
-  },
-  {
-    name: '8月份收入支出账单',
-    id: 2,
-    authorUsername: '哈哈哈哈',
-    property: 0,
-    authorUserId: 2,
-    createdTime: '2022-10-20 19:03:20',
-    lastModifyTime: '2022-10-20 19:03:20'
-  },
-  {
-    name: '一个神奇的表格',
-    id: 1,
-    authorUsername: '董永昊',
-    property: 0,
-    authorUserId: 1,
-    createdTime: '2022-10-20 19:03:20',
-    lastModifyTime: '2022-10-20 19:03:20'
-  },
-  {
-    name: '西八',
-    id: 1,
-    authorUsername: '123123',
-    property: 1,
-    authorUserId: 4,
-    createdTime: '2022-10-20 19:03:20',
-    lastModifyTime: '2022-10-20 19:03:20'
-  },
-  {
-    name: '数据库作业情况',
-    id: 1,
-    authorUsername: '董永昊',
-    property: 1,
-    authorUserId: 1,
-    createdTime: '2022-10-20 19:03:20',
-    lastModifyTime: '2022-10-20 19:03:20'
-  },
-  {
-    name: '8月份收入支出账单',
-    id: 2,
-    authorUsername: '哈哈哈哈',
-    property: 0,
-    authorUserId: 2,
-    createdTime: '2022-10-20 19:03:20',
-    lastModifyTime: '2022-10-20 19:03:20'
-  },
-  {
-    name: '一个神奇的表格',
-    id: 1,
-    authorUsername: '董永昊',
-    property: 0,
-    authorUserId: 1,
-    createdTime: '2022-10-20 19:03:20',
-    lastModifyTime: '2022-10-20 19:03:20'
-  },
-  {
-    name: '西八',
-    id: 1,
-    authorUsername: '123123',
-    property: 1,
-    authorUserId: 4,
-    createdTime: '2022-10-20 19:03:20',
-    lastModifyTime: '2022-10-20 19:03:20'
-  },
-  {
-    name: '数据库作业情况',
-    id: 1,
-    authorUsername: '董永昊',
-    property: 1,
-    authorUserId: 1,
-    createdTime: '2022-10-20 19:03:20',
-    lastModifyTime: '2022-10-20 19:03:20'
-  },
-  {
-    name: '8月份收入支出账单',
-    id: 2,
-    authorUsername: '哈哈哈哈',
-    property: 0,
-    authorUserId: 2,
-    createdTime: '2022-10-20 19:03:20',
-    lastModifyTime: '2022-10-20 19:03:20'
-  },
-  {
-    name: '一个神奇的表格',
-    id: 1,
-    authorUsername: '董永昊',
-    property: 0,
-    authorUserId: 1,
-    createdTime: '2022-10-20 19:03:20',
-    lastModifyTime: '2022-10-20 19:03:20'
-  },
-  {
-    name: '西八',
-    id: 1,
-    authorUsername: '123123',
-    property: 1,
-    authorUserId: 4,
-    createdTime: '2022-10-20 19:03:20',
-    lastModifyTime: '2022-10-20 19:03:20'
-  },
-  {
-    name: '数据库作业情况',
-    id: 1,
-    authorUsername: '董永昊',
-    property: 1,
-    authorUserId: 1,
-    createdTime: '2022-10-20 19:03:20',
-    lastModifyTime: '2022-10-20 19:03:20'
-  },
-  {
-    name: '8月份收入支出账单',
-    id: 2,
-    authorUsername: '哈哈哈哈',
-    property: 0,
-    authorUserId: 2,
-    createdTime: '2022-10-20 19:03:20',
-    lastModifyTime: '2022-10-20 19:03:20'
-  },
-  {
-    name: '一个神奇的表格',
-    id: 1,
-    authorUsername: '董永昊',
-    property: 0,
-    authorUserId: 1,
-    createdTime: '2022-10-20 19:03:20',
-    lastModifyTime: '2022-10-20 19:03:20'
-  },
-  {
-    name: '西八',
-    id: 1,
-    authorUsername: '123123',
-    property: 1,
-    authorUserId: 4,
-    createdTime: '2022-10-20 19:03:20',
-    lastModifyTime: '2022-10-20 19:03:20'
-  },
-  {
-    name: '数据库作业情况',
-    id: 1,
-    authorUsername: '董永昊',
-    property: 1,
-    authorUserId: 1,
-    createdTime: '2022-10-20 19:03:20',
-    lastModifyTime: '2022-10-20 19:03:20'
-  },
-  {
-    name: '8月份收入支出账单',
-    id: 2,
-    authorUsername: '哈哈哈哈',
-    property: 0,
-    authorUserId: 2,
-    createdTime: '2022-10-20 19:03:20',
-    lastModifyTime: '2022-10-20 19:03:20'
-  },
-  {
-    name: '一个神奇的表格',
-    id: 1,
-    authorUsername: '董永昊',
-    property: 0,
-    authorUserId: 1,
-    createdTime: '2022-10-20 19:03:20',
-    lastModifyTime: '2022-10-20 19:03:20'
-  },
-  {
-    name: '西八',
-    id: 1,
-    authorUsername: '123123',
-    property: 1,
-    authorUserId: 4,
-    createdTime: '2022-10-20 19:03:20',
-    lastModifyTime: '2022-10-20 19:03:20'
-  }
-]
 
 interface HomeProps {
 
 }
 
 const Home: FunctionComponent<HomeProps> = (props: HomeProps) => {
+  const {
+    execute: fileListExec,
+    status: fileListStatus
+  } = useFileList()
+
+  const [list, setList] = useState<FileInfo[]>([])
+
+  useEffect(() => {
+    fileListExec({})
+      .then(response => {
+        if (response.code === 1) {
+          const fileList = response.data.files
+          setList(fileList)
+        } else {
+          message.error('获取文件列表失败')
+        }
+      })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <div className="home-wrapper">
       <nav>
@@ -216,12 +44,13 @@ const Home: FunctionComponent<HomeProps> = (props: HomeProps) => {
       </nav>
       <main>
         <Table className="home-table"
-          dataSource={fileInfos}
+          dataSource={list}
+          loading={fileListStatus === 'pending'}
           pagination={{
             hideOnSinglePage: true
           }}
         >
-          <Column title='文件名称' dataIndex='name' key='name' />
+          <Column title='文件名称' dataIndex='fileName' key='name' />
           <Column title='创建者' align="center" dataIndex='authorUsername' key='authorUsername' />
           <Column title='创建时间' dataIndex='createdTime' key='createdTime' />
           <Column title='上次修改时间' dataIndex='lastModifyTime' key='lastModifyTime' />

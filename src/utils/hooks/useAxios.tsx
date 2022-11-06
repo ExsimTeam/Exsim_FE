@@ -15,15 +15,17 @@ export const useAxios = <D, R, E = string>(
   const [controller] = useState(new AbortController());
 
   // Execute the request, with a payload
-  const execute = useCallback((payload: D) => {
+  const execute = useCallback((payload: D, pathParam: any = null) => {
     setStatus('pending')
 
     return service(config.method === 'GET' ? {
       ...config,
+      url: config.url + (pathParam ? '/' + pathParam : ''),
       signal: controller.signal,
       params: payload
     } : {
       ...config,
+      url: config.url + (pathParam ? '/' + pathParam : ''),
       signal: controller.signal,
       data: payload
     })
