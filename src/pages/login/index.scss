@@ -75,21 +75,21 @@
     width: 100%;
     background-color: #f0f0f0;
     margin: 10px 0;
-    height: 55px;
-    border-radius: 55px;
+    height: 45px;
+    border-radius: 45px;
     display: flex;
     padding: 0 0.4rem;
     position: relative;
 
     span {
       display: flex;
-      height: 55px;
-      width: 55px;
+      height: 45px;
+      width: 45px;
       align-items: center;
       justify-content: center;
 
       img {
-        height: 26px;
+        height: 22px;
       }
     }
 
@@ -97,7 +97,7 @@
       flex: 1;
       line-height: 1;
       font-weight: 600;
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: #333;
 
       &::placeholder {
@@ -112,11 +112,11 @@
     background-color: #5995fd;
     border: none;
     outline: none;
-    height: 49px;
-    border-radius: 49px;
+    height: 42px;
+    border-radius: 42px;
     color: #fff;
     text-transform: uppercase;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     margin: 10px 0;
     cursor: pointer;
@@ -197,8 +197,8 @@
     width: 130px;
     height: 41px;
     font-weight: 600;
-    font-size: 1.0rem;
-    line-height: 1.0rem;
+    font-size: 1rem;
+    line-height: 1rem;
     transition: 0.5s;
 
     &:hover {
@@ -208,7 +208,6 @@
   }
 
   &-right {
-
     .login-panel-content,
     .login-panel-image {
       transform: translateX(800px);
@@ -254,6 +253,4 @@
     opacity: 0;
     z-index: 1;
   }
-
-
 }

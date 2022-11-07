@@ -1,12 +1,9 @@
+import { useRoutes } from 'react-router-dom';
 import './App.css';
-import Home from './pages/home';
+import routes from './common/routes';
 
 function App() {
-  return (
-    <div className="App">
-      <Home></Home>
-    </div>
-  );
+  return useRoutes(routes)
 }
 
 export default App;
