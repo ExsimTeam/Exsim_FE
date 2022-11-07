@@ -17,6 +17,6 @@ input {
   border: none;
 }
 
-* {
+div {
   box-sizing: content-box;
 }

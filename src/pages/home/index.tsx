@@ -1,5 +1,5 @@
 import { CloudSyncOutlined, FileTextOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, message, Popover, Radio, Table } from "antd";
+import { Button, message, Modal, Popover, Radio, Table } from "antd";
 import Input from "antd/lib/input/Input";
 import { FunctionComponent, useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -139,7 +139,7 @@ const Home: FunctionComponent<HomeProps> = (props: HomeProps) => {
               setPopoverOpen(newOpen);
             }}
           >
-            <Button className="button-new-file" type="primary" size="large" onClick={() => {
+            <Button className="button-new-file" type="primary" onClick={() => {
               setPopoverOpen(true)
             }}><PlusOutlined />新建文件</Button>
           </Popover>
@@ -197,51 +197,53 @@ const Home: FunctionComponent<HomeProps> = (props: HomeProps) => {
           )} />
         </Table>
       </main>
-      {
-        showShareBox && (
-          <div className="share-box" onClick={() => { setShowShareBox(false) }}>
-            <div className="wrapper" onClick={(e) => { e.stopPropagation() }}>
-              <h3>分享文件</h3>
-              <div className="filename-wrapper">
-                {'将文件：' + shareFileName.current}
-              </div>
-              <div className="input-wrapper">
-                <span>分享给：</span><Input className="input" placeholder="邮箱" value={shareFileEmail} onChange={(e) => { setShareFileEmail(e.target.value) }} />
-              </div>
-              <Radio.Group className="radio-wrapper" value={shareFilePermission} onChange={(e) => { setShareFilePermission(e.target.value) }}>
-                <Radio value={0}>可读</Radio>
-                <Radio value={1}>可读写</Radio>
-              </Radio.Group>
-              <Button loading={shareFileStatus === 'pending'} className="button-ok" type="primary" onClick={() => {
-                let reg = new RegExp(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/)
-                if (!reg.test(shareFileEmail)) {
-                  message.warn("邮箱格式不正确！")
-                  return
-                }
-                shareFileExec({
-                  shareToEmail: shareFileEmail,
-                  permission: shareFilePermission,
-                  fileId: shareFileId.current
-                }).then(response => {
-                  switch (response.code) {
-                    case 1:
-                      message.success("已将文件分享给 " + response.data.username)
-                      setShowShareBox(false)
-                      break
-                    case 100:
-                      message.error("文件不存在！")
-                      setShowShareBox(false)
-                      break
-                    case 101:
-                      message.error("用户未注册，请检查邮箱")
-                  }
-                })
-              }}>确认</Button>
-            </div>
-          </div>
-        )
-      }
-    </div>
+      <Modal
+        className="share-box"
+        confirmLoading={shareFileStatus === 'pending'}
+        open={showShareBox}
+        cancelText="取消"
+        okText="确定"
+        onCancel={() => { setShowShareBox(false) }}
+        onOk={
+          () => {
+            let reg = new RegExp(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/)
+            if (!reg.test(shareFileEmail)) {
+              message.warn("邮箱格式不正确！")
+              return
+            }
+            shareFileExec({
+              shareToEmail: shareFileEmail,
+              permission: shareFilePermission,
+              fileId: shareFileId.current
+            }).then(response => {
+              switch (response.code) {
+                case 1:
+                  message.success("已将文件分享给 " + response.data.username)
+                  setShowShareBox(false)
+                  break
+                case 100:
+                  message.error("文件不存在！")
+                  setShowShareBox(false)
+                  break
+                case 101:
+                  message.error("用户未注册，请检查邮箱")
+              }
+            })
+          }
+        }>
+        <h3>分享文件</h3>
+        <div className="filename-wrapper">
+          {'将文件：' + shareFileName.current}
+        </div>
+        <div className="input-wrapper">
+          <span>分享给：</span><Input className="input" placeholder="邮箱" value={shareFileEmail} onChange={(e) => { setShareFileEmail(e.target.value) }} />
+        </div>
+        <Radio.Group className="radio-wrapper" value={shareFilePermission} onChange={(e) => { setShareFilePermission(e.target.value) }}>
+          <Radio value={0}>可读</Radio>
+          <Radio value={1}>可读写</Radio>
+        </Radio.Group>
+      </Modal>
+    </div >
   )
 }
 
