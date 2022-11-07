@@ -75,61 +75,6 @@ li {
             background-color: #fff;
         }
     }
-
-    .share-box {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: rgba($color: #000000, $alpha: .2);
-
-        .wrapper {
-            width: 340px;
-            padding: 24px 30px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 2px 2px 2px 1px rgba($color: #000000, $alpha: .2);
-
-            h3 {
-                font-size: 18px;
-                font-weight: 700;
-                text-align: center;
-                margin-bottom: 20px;
-            }
-
-            .filename-wrapper {
-                margin-bottom: 20px;
-            }
-
-            .input-wrapper {
-                display: flex;
-                align-items: center;
-                margin-bottom: 20px;
-
-                span {
-                    width: 60px;
-                }
-
-                .input {
-                    flex: 1;
-                }
-            }
-
-            .radio-wrapper {
-                display: block;
-                margin-bottom: 20px;
-            }
-
-            .button-ok {
-                display: block;
-                width: 100%;
-            }
-        }
-    }
 }
 
 .popover-wrapper {
@@ -137,5 +82,37 @@ li {
 
     >div:nth-child(-n+3) {
         margin-bottom: 12px;
+    }
+}
+
+.share-box {
+
+    h3 {
+        font-size: 18px;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .filename-wrapper {
+        margin-bottom: 20px;
+    }
+
+    .input-wrapper {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+
+        span {
+            width: 60px;
+        }
+
+        .input {
+            flex: 1;
+        }
+    }
+
+    .radio-wrapper {
+        display: block;
     }
 }
