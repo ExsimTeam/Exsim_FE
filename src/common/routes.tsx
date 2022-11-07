@@ -5,6 +5,7 @@ import { lazyLoad } from "src/utils/lazyLoad";
 
 const Home = lazy(() => import('src/pages/home'))
 const Login = lazy(() => import('src/pages/login'))
+const Sheet = lazy(() => import('src/pages/sheet'))
 
 const routes: RouteObject[] = [
   {
@@ -17,6 +18,10 @@ const routes: RouteObject[] = [
       {
         path: '/login',
         element: lazyLoad(<Login />)
+      },
+      {
+        path: '/sheet/:sheetId',
+        element: lazyLoad(<Sheet />)
       }
     ]
   },
