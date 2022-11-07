@@ -53,7 +53,8 @@ export const useShareFile = () => {
     method: 'POST',
     url: 'file/shareFile'
   })
-  
+}
+
 export const getFileBody = (fileId: number, page: number, sheetId: number) => {
   return service({
     method: 'GET',
