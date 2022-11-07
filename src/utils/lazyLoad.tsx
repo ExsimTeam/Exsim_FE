@@ -24,9 +24,7 @@ export function Loading() {
       >
         <span
           style={{
-            color: '#ff4d4f',
-            fontSize: 18,
-            fontWeight: 'bold'
+            fontSize: 16
           }}
         >请稍候</span>
       </div>
