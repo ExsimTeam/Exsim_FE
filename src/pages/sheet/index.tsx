@@ -1,22 +1,22 @@
 import { message } from "antd";
-import { useEffect } from "react";
-import { Component } from "react";
-import { Navigate, NavigateFunction, useNavigate, useParams } from "react-router-dom";
-import { getFileBody } from "src/api/file";
+import { Component, useEffect } from "react";
+import { NavigateFunction, useNavigate, useParams } from "react-router-dom";
+import { getFileBody, openFile } from "src/api/file";
 import { isNumeric, toName } from "src/common/utils";
 import SpreadSheet, { CellData } from "src/component/SpreadSheet";
+import { Loading } from "src/utils/lazyLoad";
 
 import "./index.scss";
 
 
 
-class SheetMain extends Component<{ sheetId: string | undefined, navigate: NavigateFunction }, { isLoading: true }> {
+class SheetMain extends Component<{ sheetId: string | undefined, navigate: NavigateFunction }, { isLoading: boolean }> {
 
   data: Array<Array<CellData>>;
   status: boolean[];
   sheet: SpreadSheet | null = null;
-  // ws: WebSocket
-  // utoken: string
+  ws: WebSocket | null = null
+  utoken: string = ''
   sheetId: number = 0
 
   constructor(props: any) {
@@ -30,9 +30,48 @@ class SheetMain extends Component<{ sheetId: string | undefined, navigate: Navig
     const sheetId = this.props.sheetId
     if (isNumeric(sheetId)) {
       this.sheetId = parseInt(sheetId!)
+      this.openWebsocket()
     } else {
       this.props.navigate('/')
     }
+  }
+
+  openWebsocket = () => {
+    if (this.ws !== null && this.ws.readyState !== WebSocket.CLOSED) {
+      return
+    }
+    // Get the utoken of file
+    openFile(this.sheetId)
+      .then(response => {
+        if (response.code === 1) {
+          this.utoken = response.data.utoken
+          this.ws = new WebSocket(`ws://45.76.96.123:8888/api/edit?utoken=${this.utoken}`)
+          this.ws.onopen = (e) => {
+            this.setState({
+              isLoading: false
+            })
+          }
+          this.ws.onmessage = (e) => {
+            let data
+            try {
+              data = JSON.parse(e.data)
+            } catch (error) {
+              message.error('连接出错')
+            }
+            console.log(data)
+          }
+        } else if (response.code === 100) {
+          message.error('文件不存在')
+          setTimeout(() => {
+            this.props.navigate('/')
+          }, 1000)
+        } else {
+          message.error(response.code + ': ' + response.msg)
+          setTimeout(() => {
+            this.props.navigate('/')
+          }, 1000)
+        }
+      })
   }
 
   getData = (x: number, y: number) => {
@@ -101,7 +140,7 @@ class SheetMain extends Component<{ sheetId: string | undefined, navigate: Navig
   }
 
   render() {
-    return (
+    return this.state.isLoading ? <Loading /> :
       <div className="sheet-container">
         <div className="sheet-spreadsheet">
           <SpreadSheet
@@ -114,7 +153,7 @@ class SheetMain extends Component<{ sheetId: string | undefined, navigate: Navig
           />
         </div>
       </div>
-    )
+
   }
 }
 
