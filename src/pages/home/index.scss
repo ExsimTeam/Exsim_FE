@@ -18,10 +18,12 @@ li {
         background-color: #fafbfc;
 
         .home-logo-wrapper {
-            margin: 30px $nav-padding-side 20px;
+            margin: 30px $nav-padding-side 40px;
             width: 160px;
             height: 40px;
-            background-color: #00ee22;
+            font-size: 30px;
+            color: #81c349;
+            font-weight: 700;
         }
 
         ul>li {

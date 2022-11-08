@@ -1,4 +1,4 @@
-import { CloudSyncOutlined, FileTextOutlined, PlusOutlined } from "@ant-design/icons";
+import { CloudSyncOutlined, ExportOutlined, FileExcelOutlined, FileTextOutlined, LaptopOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, message, Modal, Popover, Radio, Table } from "antd";
 import Input from "antd/lib/input/Input";
 import { FunctionComponent, useCallback, useEffect, useRef, useState } from "react";
@@ -71,9 +71,10 @@ const Home: FunctionComponent<HomeProps> = (props: HomeProps) => {
   return (
     <div className="home-wrapper">
       <nav>
-        <div className="home-logo-wrapper"></div>
+        <div className="home-logo-wrapper"><FileExcelOutlined /> Exsim</div>
         <ul>
-          <li onClick={() => { setCurrentMenu(0) }}><FileTextOutlined className="home-icon" style={{ color: '#ffbd00' }} />我的文件</li>
+          <li onClick={() => { setCurrentMenu(2) }}><FileTextOutlined className="home-icon" style={{ color: '#407f00' }} />所有文件</li>
+          <li onClick={() => { setCurrentMenu(0) }}><LaptopOutlined className="home-icon" style={{ color: '#ffbd00' }} />我的文件</li>
           <li onClick={() => { setCurrentMenu(1) }}><CloudSyncOutlined className="home-icon" style={{ color: '#47c9fc' }} />共享文件</li>
         </ul>
       </nav>
@@ -150,14 +151,17 @@ const Home: FunctionComponent<HomeProps> = (props: HomeProps) => {
               clearData()
               navigate('/login')
             }}
-          >登出</Button>
+          ><ExportOutlined />登出</Button>
         </div>
         <Table className="home-table"
           dataSource={
             currentMenu === 0
               ? list.filter((item) => item.authorUsername === myName.current)
-              : list.filter((item) => item.authorUsername !== myName.current)
+              : currentMenu === 1
+                ? list.filter((item) => item.authorUsername !== myName.current)
+                : list
           }
+          rowKey='id'
           loading={fileListStatus === 'pending'}
           pagination={{
             hideOnSinglePage: true
