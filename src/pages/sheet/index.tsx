@@ -46,11 +46,13 @@ class SheetMain extends Component<{ sheetId: string | undefined, navigate: Navig
         if (response.code === 1) {
           this.utoken = response.data.utoken
           this.ws = new WebSocket(`ws://45.76.96.123:8888/api/edit?utoken=${this.utoken}`)
+
           this.ws.onopen = (e) => {
             this.setState({
               isLoading: false
             })
           }
+
           this.ws.onmessage = (e) => {
             let data
             try {
@@ -59,6 +61,9 @@ class SheetMain extends Component<{ sheetId: string | undefined, navigate: Navig
               message.error('连接出错')
             }
             console.log(data)
+            switch (data.code) {
+
+            }
           }
         } else if (response.code === 100) {
           message.error('文件不存在')
