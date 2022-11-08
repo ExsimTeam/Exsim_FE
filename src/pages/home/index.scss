@@ -4,6 +4,11 @@ li {
     list-style: none;
 }
 
+ul {
+    margin: 0;
+    padding-inline-start: 0;
+}
+
 .home-wrapper {
     display: flex;
     justify-content: stretch;
@@ -11,7 +16,7 @@ li {
     min-width: 1100px;
 
     nav {
-        flex: 1;
+        width: 250px;
         background-color: #fafbfc;
 
         .home-logo-wrapper {
@@ -19,26 +24,33 @@ li {
             width: 160px;
             height: 40px;
             font-size: 30px;
-            color: #81c349;
+            color: #1890ff;
             font-weight: 700;
         }
 
-        ul > li {
+        ul>li {
+            display: flex;
+            align-items: center;
             user-select: none;
             cursor: pointer;
             box-sizing: border-box;
             padding: 14px $nav-padding-side;
             text-align: left;
-            font-size: 18px;
+            font-size: 16px;
+            transition: background-color 0.5s;
 
             .home-icon {
                 margin-right: 10px;
+            }
+
+            .li-left {
+                flex: 1;
             }
         }
     }
 
     main {
-        flex: 3;
+        flex: 1;
         box-sizing: border-box;
         overflow: auto;
         padding: 30px 30px 20px;
@@ -46,6 +58,8 @@ li {
         .top-wrapper {
             display: flex;
             justify-content: space-between;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
 
             h2 {
                 font-weight: 700;
@@ -63,9 +77,9 @@ li {
             .home-list-item-action {
                 display: inline;
                 border: 0;
-                margin-right: 6px;
+                margin-right: 12px;
                 background-color: transparent;
-                color: blue;
+                color: #1890ff;
             }
         }
 
@@ -78,7 +92,7 @@ li {
 .popover-wrapper {
     width: 200px;
 
-    > div:nth-child(-n + 3) {
+    >div:nth-child(-n + 3) {
         margin-bottom: 12px;
     }
 }

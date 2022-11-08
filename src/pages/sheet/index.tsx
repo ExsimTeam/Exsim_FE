@@ -2,6 +2,7 @@ import { message } from "antd";
 import { Component, useEffect } from "react";
 import { NavigateFunction, useNavigate, useParams } from "react-router-dom";
 import { getFileBody, openFile } from "src/api/file";
+import { color } from "src/common/constants";
 import { isNumeric, toJSON, toName } from "src/common/utils";
 import SheetNav from "src/component/SheetNav";
 import SpreadSheet, { CellData } from "src/component/SpreadSheet";
@@ -26,7 +27,8 @@ interface SheetMainState {
     x: number,
     y: number
   }[],
-  ws: WebSocket | null;
+  ws: WebSocket | null,
+  spin: boolean
 }
 
 class SheetMain extends Component<SheetMainProps, SheetMainState> {
@@ -46,10 +48,11 @@ class SheetMain extends Component<SheetMainProps, SheetMainState> {
       fileName: '',
       author: '',
       lastModify: '',
-      curX: 0,
-      curY: 0,
+      curX: 1,
+      curY: 1,
       collaborator: [],
-      ws: null
+      ws: null,
+      spin: true
     }
 
     const sheetId = this.props.sheetId
@@ -99,7 +102,8 @@ class SheetMain extends Component<SheetMainProps, SheetMainState> {
                   // Server message
                   if (this.state.isLoading)
                     this.setState({
-                      isLoading: false
+                      isLoading: false,
+                      spin: false
                     })
                   break
                 }
@@ -178,10 +182,10 @@ class SheetMain extends Component<SheetMainProps, SheetMainState> {
             } else if (data.code === 400) {
               message.error('消息有误')
             } else if (data.code === 401) {
-              message.error('身份认证失败')
-              setTimeout(() => {
-                this.props.navigate('/')
-              }, 1000)
+              // message.error('身份认证失败')
+              // setTimeout(() => {
+              //   this.props.navigate('/')
+              // }, 1000)
             } else {
               message.error('未知错误')
             }
@@ -192,10 +196,9 @@ class SheetMain extends Component<SheetMainProps, SheetMainState> {
             console.log('WebSocket closed')
             console.log(e)
             this.setState({
-              isLoading: true
+              spin: true
             })
             this.openWebsocket()
-            message.info('连接丢失，尝试重新建立')
           }
 
           ws.onerror = (e) => {
@@ -336,10 +339,20 @@ class SheetMain extends Component<SheetMainProps, SheetMainState> {
   }
 
   render() {
-    const { isLoading, fileName, lastModify, author } = this.state
+    const { isLoading, fileName, lastModify, author, spin } = this.state
     return isLoading ? <Loading /> :
       <div className="sheet-container">
-        <SheetNav fileName={fileName} createdTime={lastModify} author={author} />
+        <SheetNav fileName={fileName} createdTime={lastModify} author={author} loading={spin} />
+
+        <div className="sheet-input">
+          <span style={{ fontWeight: 'bold' }}>
+            {toName(this.state.curX) + this.state.curY}
+          </span>
+          <span style={{ flex: 1, textAlign: 'left' }}>
+            {this.getData(this.state.curX, this.state.curY)?.value}
+          </span>
+        </div>
+
         <div className="sheet-spreadsheet">
           <SpreadSheet
             ref={v => this.sheet = v}
@@ -347,10 +360,20 @@ class SheetMain extends Component<SheetMainProps, SheetMainState> {
             setData={this.setData}
             setPos={this.setPos}
             getStatus={this.getStatus}
-            preloadHorizontalNum={2}
-            preloadVerticalNum={2}
+            preloadHorizontalNum={1}
+            preloadVerticalNum={1}
             collaborator={this.state.collaborator}
           />
+        </div>
+        <div className="collaborators">
+          <span style={{ color: '#8c8c8c' }}>正在协作：</span>
+          {
+            this.state.collaborator.map((value, index) => {
+              return <span style={{ color: color[index % color.length] }}>
+                {value.author}
+              </span>
+            })
+          }
         </div>
       </div>
 

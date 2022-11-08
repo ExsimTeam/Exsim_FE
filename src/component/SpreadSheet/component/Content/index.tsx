@@ -65,6 +65,8 @@ class Content extends React.Component<IContentProp, IContentState> {
     componentWillUnmount = () => {
         document.removeEventListener("keydown", this.onKeyDown);
         document.removeEventListener("keypress", this.onKeyPress);
+        window.removeEventListener("mousemove", this.onMouseMove);
+        window.removeEventListener("mouseup", this.onMouseUp);
     }
 
     handleMouseDown = (e: React.MouseEvent) => {

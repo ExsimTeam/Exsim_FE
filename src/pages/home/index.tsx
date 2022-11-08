@@ -1,4 +1,4 @@
-import { CloudSyncOutlined, ExportOutlined, FileExcelOutlined, FileTextOutlined, LaptopOutlined, PlusOutlined } from "@ant-design/icons";
+import { CloudSyncOutlined, ExportOutlined, FileExcelOutlined, FileTextOutlined, LaptopOutlined, PlusOutlined, RightOutlined } from "@ant-design/icons";
 import { Button, message, Modal, Popover, Radio, Table } from "antd";
 import Input from "antd/lib/input/Input";
 import { FunctionComponent, useCallback, useEffect, useRef, useState } from "react";
@@ -50,7 +50,7 @@ const Home: FunctionComponent<HomeProps> = (props: HomeProps) => {
   const shareFileId = useRef(-1)
   const shareFileName = useRef('')
 
-  const [currentMenu, setCurrentMenu] = useState(0)
+  const [currentMenu, setCurrentMenu] = useState(2)
   const [list, setList] = useState<FileInfo[]>([])
   const [popoverOpen, setPopoverOpen] = useState(false)
   const [newFileName, setNewFileName] = useState('')
@@ -73,9 +73,27 @@ const Home: FunctionComponent<HomeProps> = (props: HomeProps) => {
       <nav>
         <div className="home-logo-wrapper"><FileExcelOutlined /> Exsim</div>
         <ul>
-          <li onClick={() => { setCurrentMenu(2) }}><FileTextOutlined className="home-icon" style={{ color: '#407f00' }} />所有文件</li>
-          <li onClick={() => { setCurrentMenu(0) }}><LaptopOutlined className="home-icon" style={{ color: '#ffbd00' }} />我的文件</li>
-          <li onClick={() => { setCurrentMenu(1) }}><CloudSyncOutlined className="home-icon" style={{ color: '#47c9fc' }} />共享文件</li>
+          <li style={{ backgroundColor: currentMenu === 2 ? '#d9d9d9' : undefined }} onClick={() => { setCurrentMenu(2) }}>
+            <div className="li-left">
+              <FileTextOutlined className="home-icon" style={{ color: '#407f00' }} />
+              所有文件
+            </div>
+            <RightOutlined />
+          </li>
+          <li style={{ backgroundColor: currentMenu === 0 ? '#d9d9d9' : undefined }} onClick={() => { setCurrentMenu(0) }}>
+            <div className="li-left">
+              <LaptopOutlined className="home-icon" style={{ color: '#ffbd00' }} />
+              我的文件
+            </div>
+            <RightOutlined />
+          </li>
+          <li style={{ backgroundColor: currentMenu === 1 ? '#d9d9d9' : undefined }} onClick={() => { setCurrentMenu(1) }}>
+            <div className="li-left">
+              <CloudSyncOutlined className="home-icon" style={{ color: '#47c9fc' }} />
+              共享文件
+            </div>
+            <RightOutlined />
+          </li>
         </ul>
       </nav>
       <main>
@@ -144,7 +162,7 @@ const Home: FunctionComponent<HomeProps> = (props: HomeProps) => {
               setPopoverOpen(true)
             }}><PlusOutlined />新建文件</Button>
           </Popover>
-          <h2>{myName.current}</h2>
+          <h2>你好，{myName.current}</h2>
           <Button
             className="button-logout"
             onClick={() => {

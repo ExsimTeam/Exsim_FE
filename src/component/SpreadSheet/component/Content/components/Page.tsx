@@ -130,6 +130,7 @@ class GridValues extends React.Component<{
                 width: CellWidth - 4,
                 padding: "0px 2px 0px 2px",
                 lineHeight: CellHeight + "px",
+                overflow: 'hidden',
                 ...value.format
             }}
         >

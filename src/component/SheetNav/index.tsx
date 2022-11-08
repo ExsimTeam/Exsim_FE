@@ -18,10 +18,14 @@ export default function SheetNav(props: SheetNavProps) {
       <div className='button-back'
         onClick={() => navigate('/')}
       ><HomeOutlined color='#444' /></div>
-      <div className='file-name'>{props.fileName}</div>
-      {props.loading && <div className='loading-wrapper'><Spin /></div>}
-      <div className='created-time'>作者：{props.author}</div>
-      <div className='created-time'>上次修改：{props.createdTime}</div>
+      <div className='file-name'>
+        <span className='file-name-text'>
+          {props.fileName}
+        </span>
+        {props.loading && <div className='loading-wrapper'><Spin /></div>}
+      </div>
+      <div className='author'><strong>作者：</strong>{props.author}</div>
+      <div className='created-time'><strong>上次修改：</strong>{props.createdTime}</div>
     </div>
   )
 }
