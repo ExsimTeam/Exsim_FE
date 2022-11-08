@@ -122,6 +122,29 @@ class SheetMain extends Component<SheetMainProps, SheetMainState> {
                   break
                 }
                 case 4: {
+                  const author = data.sender
+                  const x = 1
+                  const y = 1
+                  this.setState(prev => {
+                    let flag = false
+                    let newList = prev.collaborator.map((value, index) => {
+                      if (value.author === author) flag = true
+                      return value.author === author ? {
+                        author: value.author,
+                        x: x,
+                        y: y
+                      } : value
+                    })
+                    if (!flag) newList.push({
+                      author: author,
+                      x: x,
+                      y: y
+                    })
+
+                    return {
+                      collaborator: newList
+                    }
+                  })
                   break
                 }
                 case 5: {
