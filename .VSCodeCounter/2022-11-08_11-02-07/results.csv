@@ -1,0 +1,42 @@
+"filename", "language", "TypeScript React", "SCSS", "TypeScript", "CSS", "XML", "comment", "blank", "total"
+"/Users/tung/Workspaces/Exsim_FE/src/App.css", "CSS", 0, 0, 0, 15, 0, 0, 3, 18
+"/Users/tung/Workspaces/Exsim_FE/src/App.tsx", "TypeScript React", 7, 0, 0, 0, 0, 0, 3, 10
+"/Users/tung/Workspaces/Exsim_FE/src/api/auth.ts", "TypeScript", 0, 0, 49, 0, 0, 29, 9, 87
+"/Users/tung/Workspaces/Exsim_FE/src/api/file.ts", "TypeScript", 0, 0, 97, 0, 0, 0, 8, 105
+"/Users/tung/Workspaces/Exsim_FE/src/common/constants.tsx", "TypeScript React", 13, 0, 0, 0, 0, 7, 5, 25
+"/Users/tung/Workspaces/Exsim_FE/src/common/routes.tsx", "TypeScript React", 41, 0, 0, 0, 0, 0, 3, 44
+"/Users/tung/Workspaces/Exsim_FE/src/common/utils.ts", "TypeScript", 0, 0, 33, 0, 0, 0, 5, 38
+"/Users/tung/Workspaces/Exsim_FE/src/component/SheetNav/index.scss", "SCSS", 0, 30, 0, 0, 0, 0, 5, 35
+"/Users/tung/Workspaces/Exsim_FE/src/component/SheetNav/index.tsx", "TypeScript React", 24, 0, 0, 0, 0, 0, 3, 27
+"/Users/tung/Workspaces/Exsim_FE/src/component/SpreadSheet/component/Content/components/DataInput.tsx", "TypeScript React", 90, 0, 0, 0, 0, 0, 16, 106
+"/Users/tung/Workspaces/Exsim_FE/src/component/SpreadSheet/component/Content/components/HorizontalPageContainer.tsx", "TypeScript React", 54, 0, 0, 0, 0, 9, 9, 72
+"/Users/tung/Workspaces/Exsim_FE/src/component/SpreadSheet/component/Content/components/Page.tsx", "TypeScript React", 147, 0, 0, 0, 0, 9, 14, 170
+"/Users/tung/Workspaces/Exsim_FE/src/component/SpreadSheet/component/Content/components/Selection.tsx", "TypeScript React", 172, 0, 0, 0, 0, 3, 16, 191
+"/Users/tung/Workspaces/Exsim_FE/src/component/SpreadSheet/component/Content/index.tsx", "TypeScript React", 203, 0, 0, 0, 0, 4, 44, 251
+"/Users/tung/Workspaces/Exsim_FE/src/component/SpreadSheet/component/Header/HeaderHorizontal.tsx", "TypeScript React", 43, 0, 0, 0, 0, 6, 12, 61
+"/Users/tung/Workspaces/Exsim_FE/src/component/SpreadSheet/component/Header/HeaderVertical.tsx", "TypeScript React", 45, 0, 0, 0, 0, 3, 12, 60
+"/Users/tung/Workspaces/Exsim_FE/src/component/SpreadSheet/component/Header/component/CellsContainer.tsx", "TypeScript React", 51, 0, 0, 0, 0, 3, 5, 59
+"/Users/tung/Workspaces/Exsim_FE/src/component/SpreadSheet/component/Header/component/HeaderCell.tsx", "TypeScript React", 65, 0, 0, 0, 0, 0, 11, 76
+"/Users/tung/Workspaces/Exsim_FE/src/component/SpreadSheet/component/Header/component/HeaderCorner.tsx", "TypeScript React", 20, 0, 0, 0, 0, 0, 4, 24
+"/Users/tung/Workspaces/Exsim_FE/src/component/SpreadSheet/component/Header/component/HeaderPage.tsx", "TypeScript React", 32, 0, 0, 0, 0, 0, 4, 36
+"/Users/tung/Workspaces/Exsim_FE/src/component/SpreadSheet/component/PlaceHolder.tsx", "TypeScript React", 20, 0, 0, 0, 0, 0, 4, 24
+"/Users/tung/Workspaces/Exsim_FE/src/component/SpreadSheet/index.tsx", "TypeScript React", 181, 0, 0, 0, 0, 33, 32, 246
+"/Users/tung/Workspaces/Exsim_FE/src/index.css", "CSS", 0, 0, 0, 19, 0, 0, 4, 23
+"/Users/tung/Workspaces/Exsim_FE/src/index.tsx", "TypeScript React", 12, 0, 0, 0, 0, 0, 1, 13
+"/Users/tung/Workspaces/Exsim_FE/src/pages/home/index.scss", "SCSS", 0, 96, 0, 0, 0, 0, 22, 118
+"/Users/tung/Workspaces/Exsim_FE/src/pages/home/index.tsx", "TypeScript React", 232, 0, 0, 0, 0, 1, 17, 250
+"/Users/tung/Workspaces/Exsim_FE/src/pages/login/index.scss", "SCSS", 0, 220, 0, 0, 0, 2, 35, 257
+"/Users/tung/Workspaces/Exsim_FE/src/pages/login/index.tsx", "TypeScript React", 361, 0, 0, 0, 0, 16, 32, 409
+"/Users/tung/Workspaces/Exsim_FE/src/pages/sheet/index.scss", "SCSS", 0, 13, 0, 0, 0, 0, 2, 15
+"/Users/tung/Workspaces/Exsim_FE/src/pages/sheet/index.tsx", "TypeScript React", 222, 0, 0, 0, 0, 8, 32, 262
+"/Users/tung/Workspaces/Exsim_FE/src/react-app-env.d.ts", "TypeScript", 0, 0, 0, 0, 0, 1, 1, 2
+"/Users/tung/Workspaces/Exsim_FE/src/res/icons/lock.svg", "XML", 0, 0, 0, 0, 12, 1, 1, 14
+"/Users/tung/Workspaces/Exsim_FE/src/res/icons/mail.svg", "XML", 0, 0, 0, 0, 12, 1, 1, 14
+"/Users/tung/Workspaces/Exsim_FE/src/res/icons/person.svg", "XML", 0, 0, 0, 0, 11, 1, 1, 13
+"/Users/tung/Workspaces/Exsim_FE/src/res/signin.svg", "XML", 0, 0, 0, 0, 1, 0, 0, 1
+"/Users/tung/Workspaces/Exsim_FE/src/res/signup.svg", "XML", 0, 0, 0, 0, 1, 0, 0, 1
+"/Users/tung/Workspaces/Exsim_FE/src/utils/hooks/useAxios.tsx", "TypeScript React", 47, 0, 0, 0, 0, 2, 6, 55
+"/Users/tung/Workspaces/Exsim_FE/src/utils/lazyLoad.tsx", "TypeScript React", 39, 0, 0, 0, 0, 0, 2, 41
+"/Users/tung/Workspaces/Exsim_FE/src/utils/service.tsx", "TypeScript React", 68, 0, 0, 0, 0, 1, 7, 76
+"/Users/tung/Workspaces/Exsim_FE/src/utils/storageUtils.ts", "TypeScript", 0, 0, 12, 0, 0, 20, 5, 37
+"Total", "-", 2189, 359, 191, 34, 37, 160, 396, 3366

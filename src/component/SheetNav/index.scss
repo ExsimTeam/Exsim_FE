@@ -2,9 +2,9 @@
   width: 100%;
   height: 60px;
   display: flex;
-  box-sizing: border-box;
+  box-sizing: border-box !important;
   align-items: center;
-  padding: 12px 42px;
+  padding: 12px 30px;
   background-color: #fff;
 
   .button-back {
@@ -20,15 +20,15 @@
   .created-time {
     color: #444;
     font-size: 16px;
-    margin: 0 26px;
+    margin: 0 5px;
   }
 
   .loading-wrapper {
-    margin-left: auto;
   }
 
   .file-name {
     font-size: 20px;
     margin-left: 24px;
+    flex: 1;
   }
 }

@@ -1,9 +1,9 @@
-import React, { CSSProperties } from "react";
+import React from "react";
 import Content from "./component/Content";
 
-import HeaderHorizontal from './component/Header/HeaderHorizontal'
-import { HeaderVertical } from "./component/Header/HeaderVertical";
 import { CellHeight, CellWidth, HeaderHorizontalHeight, HeaderVerticalWidth, PageHeight, PageWidth } from "src/common/constants";
+import HeaderHorizontal from './component/Header/HeaderHorizontal';
+import { HeaderVertical } from "./component/Header/HeaderVertical";
 
 export interface CellData {
     value: string,
@@ -34,9 +34,16 @@ interface IProp {
     getData: Function,
     setData: Function,
     getStatus: Function,
+    setPos: Function,
 
     preloadVerticalNum: number,
-    preloadHorizontalNum: number
+    preloadHorizontalNum: number,
+
+    collaborator: {
+        author: string,
+        x: number,
+        y: number
+    }[],
 }
 
 class SpreadSheet extends React.Component<IProp, IState> {
@@ -113,6 +120,7 @@ class SpreadSheet extends React.Component<IProp, IState> {
             selectedLeft: left > 0 ? left : 1,
             selectedRight: right > 0 ? right : 1
         })
+        this.props.setPos(left, top)
     }
 
     /**
@@ -235,6 +243,8 @@ class SpreadSheet extends React.Component<IProp, IState> {
                             selectedBottom={this.state.selectedBottom}
                             selectedLeft={this.state.selectedLeft}
                             selectedRight={this.state.selectedRight}
+
+                            collaborator={this.props.collaborator}
                         />
                     </div>
                 </div>

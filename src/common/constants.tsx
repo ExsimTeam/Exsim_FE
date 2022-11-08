@@ -23,3 +23,7 @@ export enum DirectionType {
   VERTICAL,
   HORIZONTAL
 }
+
+export const color = [
+  '#ff4d4f', '#ffc53d', '#ff7a45', '#a0d911', '#f759ab', '#fa8c16'
+]

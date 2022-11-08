@@ -1,5 +1,5 @@
-import React from 'react'
-import { CellHeight, CellWidth, DirectionType, PageHeight, PageWidth } from 'src/common/constants';
+import React from 'react';
+import { CellHeight, CellWidth, color, DirectionType, PageHeight, PageWidth } from 'src/common/constants';
 import PlaceHolder from '../PlaceHolder';
 import DataInput from './components/DataInput';
 import HorizontalPageContainer from './components/HorizontalPageContainer';
@@ -25,6 +25,12 @@ interface IContentProp {
     selectedBottom: number,
     selectedLeft: number,
     selectedRight: number
+
+    collaborator: {
+        author: string,
+        x: number,
+        y: number
+    }[],
 }
 
 interface IContentState {
@@ -58,6 +64,7 @@ class Content extends React.Component<IContentProp, IContentState> {
 
     componentWillUnmount = () => {
         document.removeEventListener("keydown", this.onKeyDown);
+        document.removeEventListener("keypress", this.onKeyPress);
     }
 
     handleMouseDown = (e: React.MouseEvent) => {
@@ -224,12 +231,46 @@ class Content extends React.Component<IContentProp, IContentState> {
 
 
 
+
+                    {
+                        this.props.collaborator.map((value, index) => {
+                            return <div
+                                key={index}
+                                style={{
+                                    position: 'absolute',
+                                    top: (value.y - 1) * CellHeight - 2,
+                                    left: (value.x - 1) * CellWidth - 2,
+                                    padding: 1,
+                                    border: "2px solid " + color[index % color.length],
+                                    height: CellHeight - 3,
+                                    width: CellWidth - 3
+                                }}
+                            >
+                                <span
+                                    style={{
+                                        backgroundColor: color[index % color.length],
+                                        fontSize: 10,
+                                        lineHeight: '14px',
+                                        padding: '1px 5px',
+                                        position: 'absolute',
+                                        top: value.y === 1 ? CellHeight : -16,
+                                        left: -2,
+                                        zIndex: 9999
+                                    }}
+                                >
+                                    {value.author}
+                                </span>
+                            </div>
+                        })
+                    }
+
                     <Selection
                         selectedTop={this.props.selectedTop}
                         selectedBottom={this.props.selectedBottom}
                         selectedLeft={this.props.selectedLeft}
                         selectedRight={this.props.selectedRight}
                     />
+
                 </div>
                 {
                     this.state.isInputing ?
