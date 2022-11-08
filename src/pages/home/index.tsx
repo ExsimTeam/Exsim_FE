@@ -189,7 +189,7 @@ const Home: FunctionComponent<HomeProps> = (props: HomeProps) => {
                 }}
               >删除</button>
               {
-                currentMenu === 0 && <button className="home-list-item-action" onClick={() => {
+                item.authorUsername === myName.current && <button className="home-list-item-action" onClick={() => {
                   setShowShareBox(true)
                   setShareFileEmail('')
                   setShareFilePermission(0)
