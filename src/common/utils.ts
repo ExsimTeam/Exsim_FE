@@ -26,3 +26,13 @@ export function toIndex(columnName: string) {
 export const isNumeric = (value: any) => {
   return !isNaN(parseFloat(value)) && isFinite(value)
 }
+
+export function toJSON(value: string, onerror: () => void) {
+  let format = undefined
+  try {
+    format = JSON.parse(value)
+  } catch (error) {
+    onerror()
+  }
+  return format
+}

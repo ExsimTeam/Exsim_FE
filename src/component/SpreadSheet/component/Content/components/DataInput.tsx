@@ -1,18 +1,19 @@
 import React from "react";
 import { CellHeight, CellWidth } from "src/common/constants";
+import { CellData } from "src/component/SpreadSheet";
 
 interface IDataInputProp {
     getData: Function,
     setData: Function,
     rowIndex: number,
     columnIndex: number,
-    initialValue: any,
+    initialValue: CellData | undefined,
 
     submit: Function
 }
 
 interface IDataInputState {
-    value: any
+    value: CellData
 }
 
 class DataInput extends React.Component<IDataInputProp, IDataInputState> {
@@ -21,9 +22,9 @@ class DataInput extends React.Component<IDataInputProp, IDataInputState> {
 
     constructor(props: IDataInputProp) {
         super(props);
+        const cellData = props.getData(props.columnIndex, props.rowIndex)
         this.state = {
-            value: this.props.initialValue === undefined ? (props.getData(props.columnIndex, props.rowIndex) === null ? '' :
-                props.getData(props.columnIndex, props.rowIndex)) : this.props.initialValue
+            value: this.props.initialValue === undefined ? (cellData === null ? { value: '', format: {} } : cellData) : this.props.initialValue
         }
         this.inputRef = React.createRef();
     }
@@ -38,13 +39,16 @@ class DataInput extends React.Component<IDataInputProp, IDataInputState> {
 
     componentWillUnmount = () => {
         if (this.isSubmit)
-            this.props.setData(this.props.columnIndex, this.props.rowIndex, this.state.value === '' ? null : this.state.value);
+            this.props.setData(this.props.columnIndex, this.props.rowIndex, this.state.value);
     }
 
     handleChange = (e: any) => {
-        this.setState({
-            value: e.target.value
-        })
+        this.setState(prev => ({
+            value: {
+                value: e.target.value,
+                format: prev.value.format
+            }
+        }))
     }
 
     handleBlur = () => {
@@ -89,7 +93,7 @@ class DataInput extends React.Component<IDataInputProp, IDataInputState> {
                         outline: "none",
                         border: "none"
                     }}
-                    value={this.state.value}
+                    value={this.state.value.value}
                     onChange={this.handleChange}
                     onKeyDown={this.handleKeyDown}
                     onBlur={this.handleBlur}

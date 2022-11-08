@@ -7,7 +7,7 @@ import { CellHeight, CellWidth, HeaderHorizontalHeight, HeaderVerticalWidth, Pag
 
 export interface CellData {
     value: string,
-    format: {
+    format?: {
         fontSize?: number | undefined,
         fontWeight?: 'bold' | 'normal' | undefined,
         fontStyle?: 'italic' | 'normal' | undefined,

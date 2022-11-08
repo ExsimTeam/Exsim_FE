@@ -55,6 +55,31 @@ export const useShareFile = () => {
   })
 }
 
+export const openFile = (fileId: number) => {
+  return service({
+    method: 'GET',
+    url: 'file/openFile',
+    params: {
+      fileId: fileId
+    }
+  })
+    .then(response => {
+      return response as unknown as {
+        code: number,
+        msg: string,
+        data: {
+          utoken: string,
+          fileInfoVo: {
+            info: number,
+            sheetNum: number,
+            sheets: any,
+            sheetPtr: number
+          }
+        }
+      }
+    })
+}
+
 export const getFileBody = (fileId: number, page: number, sheetId: number) => {
   return service({
     method: 'GET',

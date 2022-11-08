@@ -16,7 +16,3 @@ input {
   outline: none;
   border: none;
 }
-
-div {
-  box-sizing: content-box;
-}

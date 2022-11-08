@@ -146,7 +146,7 @@ const Signin = () => {
           current.validate(false)
           return false
         }
-        let reg = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,18}$/)
+        let reg = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&_])[A-Za-z\d@$!%*#?&_]{8,18}$/)
         if (!reg.test(value)) {
           message.error('密码为6-18位，须包含字母、数字与特殊字符')
           current.validate(false)
@@ -263,7 +263,7 @@ const Signup = () => {
           current.validate(false)
           return false
         }
-        let reg = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,18}$/)
+        let reg = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&_])[A-Za-z\d@$!%*#?&_]{8,18}$/)
         if (!reg.test(value)) {
           message.error('密码为6-18位，须包含字母、数字与特殊字符')
           current.validate(false)
