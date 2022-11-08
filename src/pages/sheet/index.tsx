@@ -3,19 +3,37 @@ import { Component, useEffect } from "react";
 import { NavigateFunction, useNavigate, useParams } from "react-router-dom";
 import { getFileBody, openFile } from "src/api/file";
 import { isNumeric, toJSON, toName } from "src/common/utils";
+import SheetNav from "src/component/SheetNav";
 import SpreadSheet, { CellData } from "src/component/SpreadSheet";
 import { Loading } from "src/utils/lazyLoad";
 
 import "./index.scss";
 
+interface SheetMainProps {
+  sheetId: string | undefined,
+  navigate: NavigateFunction
+}
 
+interface SheetMainState {
+  isLoading: boolean,
+  fileName: string,
+  author: string,
+  lastModify: string,
+  curX: number,
+  curY: number,
+  collaborator: {
+    author: string,
+    x: number,
+    y: number
+  }[],
+  ws: WebSocket | null;
+}
 
-class SheetMain extends Component<{ sheetId: string | undefined, navigate: NavigateFunction }, { isLoading: boolean }> {
+class SheetMain extends Component<SheetMainProps, SheetMainState> {
 
   data: Array<Array<CellData>>;
   status: boolean[];
   sheet: SpreadSheet | null = null;
-  ws: WebSocket | null = null
   utoken: string = ''
   fileId: number = 0
 
@@ -24,7 +42,14 @@ class SheetMain extends Component<{ sheetId: string | undefined, navigate: Navig
     this.data = new Array(100);
     this.status = [];
     this.state = {
-      isLoading: true
+      isLoading: true,
+      fileName: '',
+      author: '',
+      lastModify: '',
+      curX: 0,
+      curY: 0,
+      collaborator: [],
+      ws: null
     }
 
     const sheetId = this.props.sheetId
@@ -37,21 +62,29 @@ class SheetMain extends Component<{ sheetId: string | undefined, navigate: Navig
   }
 
   openWebsocket = () => {
-    if (this.ws !== null && this.ws.readyState !== WebSocket.CLOSED) {
+    if (this.state.ws !== null && this.state.ws.readyState !== WebSocket.CLOSED) {
       return
     }
     // Get the utoken of file
     openFile(this.fileId)
       .then(response => {
         if (response.code === 1) {
-          this.utoken = response.data.utoken
-          this.ws = new WebSocket(`ws://45.76.96.123:8888/api/edit?utoken=${this.utoken}`)
+          this.setState({
+            fileName: response.data.fileName,
+            author: response.data.author,
+            lastModify: response.data.lastModify
+          })
 
-          this.ws.onopen = (e) => {
+          this.utoken = response.data.utoken
+
+          let ws = new WebSocket(`ws://45.76.96.123:8888/api/edit?utoken=${this.utoken}`)
+
+          ws.onopen = (e) => {
             console.log('WebSocket connection established')
+            this.keepAlive()
           }
 
-          this.ws.onmessage = (e) => {
+          ws.onmessage = (e) => {
             let data
             try {
               data = JSON.parse(e.data)
@@ -91,6 +124,33 @@ class SheetMain extends Component<{ sheetId: string | undefined, navigate: Navig
                 case 4: {
                   break
                 }
+                case 5: {
+                  let opt = toJSON(data.data, () => message.error('消息出错'))
+                  const author = data.sender;
+                  const x = opt.x;
+                  const y = opt.y;
+                  this.setState(prev => {
+                    let flag = false
+                    let newList = prev.collaborator.map((value, index) => {
+                      if (value.author === author) flag = true
+                      return value.author === author ? {
+                        author: value.author,
+                        x: x,
+                        y: y
+                      } : value
+                    })
+                    if (!flag) newList.push({
+                      author: author,
+                      x: x,
+                      y: y
+                    })
+
+                    return {
+                      collaborator: newList
+                    }
+                  })
+                  break
+                }
               }
             } else if (data.code === 400) {
               message.error('消息有误')
@@ -104,8 +164,10 @@ class SheetMain extends Component<{ sheetId: string | undefined, navigate: Navig
             }
           }
 
-          this.ws.onclose = () => {
+          ws.onclose = (e) => {
+            this.cancelKeepAlive()
             console.log('WebSocket closed')
+            console.log(e)
             this.setState({
               isLoading: true
             })
@@ -113,10 +175,15 @@ class SheetMain extends Component<{ sheetId: string | undefined, navigate: Navig
             message.info('连接丢失，尝试重新建立')
           }
 
-          this.ws.onerror = (e) => {
+          ws.onerror = (e) => {
+            this.cancelKeepAlive()
             message.error('连接出错')
             this.openWebsocket()
           }
+
+          this.setState({
+            ws: ws
+          })
         } else if (response.code === 100) {
           message.error('文件不存在')
           setTimeout(() => {
@@ -129,6 +196,24 @@ class SheetMain extends Component<{ sheetId: string | undefined, navigate: Navig
           }, 1000)
         }
       })
+  }
+
+  timerId: any = null
+  keepAlive = () => {
+    console.log('alive')
+    let timeout = 15000
+    if (this.state.ws?.readyState === this.state.ws?.OPEN) {
+      this.state.ws?.send(JSON.stringify({
+        opcode: -1,
+        data: {}
+      }))
+    }
+    this.timerId = setTimeout(this.keepAlive, timeout)
+  }
+
+  cancelKeepAlive = () => {
+    if (this.timerId)
+      clearTimeout(this.timerId)
   }
 
   modifyCell = (sheetId: number, x: number, y: number, s: CellData) => {
@@ -144,7 +229,27 @@ class SheetMain extends Component<{ sheetId: string | undefined, navigate: Navig
     })
     console.log(s.format)
     console.log(data)
-    this.ws?.send(data)
+    this.state.ws?.send(data)
+  }
+
+  setPos = (x: number, y: number) => {
+    this.setState(prev => {
+      if (!(x === prev.curX && y === prev.curY)) {
+        const data = JSON.stringify({
+          opcode: 5,
+          data: {
+            x: x,
+            y: y
+          }
+        })
+        this.state.ws?.send(data)
+      }
+      return {
+        curX: x,
+        curY: y
+      }
+    })
+
   }
 
   getData = (x: number, y: number) => {
@@ -208,16 +313,20 @@ class SheetMain extends Component<{ sheetId: string | undefined, navigate: Navig
   }
 
   render() {
-    return this.state.isLoading ? <Loading /> :
+    const { isLoading, fileName, lastModify, author } = this.state
+    return isLoading ? <Loading /> :
       <div className="sheet-container">
+        <SheetNav fileName={fileName} createdTime={lastModify} author={author} />
         <div className="sheet-spreadsheet">
           <SpreadSheet
             ref={v => this.sheet = v}
             getData={this.getData}
             setData={this.setData}
+            setPos={this.setPos}
             getStatus={this.getStatus}
             preloadHorizontalNum={2}
             preloadVerticalNum={2}
+            collaborator={this.state.collaborator}
           />
         </div>
       </div>

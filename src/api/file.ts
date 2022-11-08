@@ -74,7 +74,10 @@ export const openFile = (fileId: number) => {
             sheetNum: number,
             sheets: any,
             sheetPtr: number
-          }
+          },
+          fileName: string,
+          author: string,
+          lastModify: string
         }
       }
     })
