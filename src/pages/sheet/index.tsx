@@ -80,7 +80,7 @@ class SheetMain extends Component<SheetMainProps, SheetMainState> {
 
           this.utoken = response.data.utoken
 
-          let ws = new WebSocket(`ws://45.76.96.123:8888/api/edit?utoken=${this.utoken}`)
+          let ws = new WebSocket(`wss://exsim.idyh.xyz/api/edit?utoken=${this.utoken}`)
 
           ws.onopen = (e) => {
             console.log('WebSocket connection established')
